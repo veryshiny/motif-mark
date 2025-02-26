@@ -128,12 +128,12 @@ def oneline_fasta(file_input,first_output):
 inputf = args.fastafile   #"Figure_1.fasta"
 motiff = args.motiffile
 
-oneline_fasta(inputf,f"{inputf[:-6]}_oneline.fasta")    
+oneline_fasta(inputf,f"{inputf.split('.f')[0]}_oneline.fasta")    
 
 
 
-input_file = open(f"{inputf[:-6]}_oneline.fasta","r")
-final_figure_name = f"{inputf[:-6]}.png"
+input_file = open(f"{inputf.split('.f')[0]}_oneline.fasta","r")
+final_figure_name = f"{inputf.split('.f')[0]}.png"
 motif_file = open(motiff,'r')#'Fig_1_motifs.txt'
 
 
