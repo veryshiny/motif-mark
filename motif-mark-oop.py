@@ -122,17 +122,43 @@ def oneline_fasta(file_input,first_output):
                     op.writelines(line)
 
 
-# In[173]:
+def oneline_fasta1(file_input):
+    first_line=True
+    list_records = []
+    with open(file_input,"r") as file:
+        line_seq=''
+        for line in file:
+            line=line.strip('\n')
+            if line.startswith(">"):
+                if first_line==True:
+                    list_records.append(line)
+                    first_line=False
+                else:
+                    list_records.append(line_seq)
+                    list_records.append(line)
+                    
+                    line_seq=''
+            else:
+                line_seq +=line
+    list_records.append(line_seq)
+    return list_records
 
+# In[173]:
 
 inputf = args.fastafile   #"Figure_1.fasta"
 motiff = args.motiffile
 
-oneline_fasta(inputf,f"{inputf.split('.f')[0]}_oneline.fasta")    
+
+
+#print( oneline_fasta1(inputf))
+
+
+#oneline_fasta(inputf,f"{inputf.split('.f')[0]}_oneline.fasta")    
 
 
 
-input_file = open(f"{inputf.split('.f')[0]}_oneline.fasta","r")
+#input_file = open(f"{inputf.split('.f')[0]}_oneline.fasta","r")
+input_file = oneline_fasta1(inputf)
 final_figure_name = f"{inputf.split('.f')[0]}.png"
 motif_file = open(motiff,'r')#'Fig_1_motifs.txt'
 
@@ -261,7 +287,7 @@ for gene in gene_list:
 
 # In[192]:
 
-fig_width = 60+150*len(MotifFinderPerGene.motif_gene_name_set) + 20*len(MotifFinderPerGene.motif_gene_name_set)
+fig_width = 60+150*len(MotifFinderPerGene.motif_gene_name_set) + 20*len(MotifFinderPerGene.motif_gene_name_set)+25
 # code 
 # importing pycairo 
 
@@ -337,6 +363,26 @@ for motif in motif_object_list:
     #print(counter)
     
 
+context.set_source_rgb(0, 0, 0) 
+context.move_to(120, counter+5)
+context.show_text('intron')
+context.stroke()
+
+context.set_line_width(4)
+context.move_to(50,counter)       
+context.line_to(100,counter)
+context.stroke()
+
+counter+=20
+
+context.move_to(120, counter+5)
+context.show_text('exon')
+context.stroke()
+
+context.set_line_width(12)
+context.move_to(50,counter)       
+context.line_to(100,counter)
+context.stroke()
 
 # printing message when file is saved 
 print(f"File Saved to {final_figure_name}") 
