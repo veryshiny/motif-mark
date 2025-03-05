@@ -2,8 +2,11 @@
 
 - Script is named motif-mark-oop.py and has the following file inputs: 
 
-    - -f: Input FASTA file (seqs ≤1000 bases long)
+    - -f: Input FASTA file (seqs ≤1000 bases with exons capitalized and introns in lower-case)
     - -m: Motifs file (≤10 bases each, one motif per line in a text file)
+
+Example argparse statement : 
+            `./motifMark.py -f input.fasta -m motifs.txt`
 
 - Output file will have same prefix as input file (e.g. Figure_1.fa -> Figure_1.png) and have one single, well-labeled figure, per FASTA file
     - All features (motifs, introns, exons) are to scale
