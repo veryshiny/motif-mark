@@ -23,8 +23,6 @@ def get_args():
 args = get_args()
 
 
-
-
 sequence = 'aaaabbbaaacccdddeeefff'
 query_set = {'aaa','bbb'}
 
@@ -44,11 +42,42 @@ motif_position_calculator(query_set,sequence)
 # In[170]:
 
 
-motif="YgcY"
+motif="WYgcWY"
+
+dict_motif = {'W':['A','T'],
+              'S': ['C','G'],
+              'M':['A','C'],
+              'K':['G','T'],
+              'R':['A','G'],
+              'Y':['C','T'],
+              'B':['C','G','T'],
+              'D':['A','G','T'],
+              'H':['A','C','T'],
+              'V':['A','C','G'],
+              'N': ['A','C','G','T']}
+
+
 
 def filler(word, from_char, to_char):
-    options = [(c,) if c != from_char else (from_char, to_char) for c in word]
-    return (''.join(o) for o in product(*options))
+   options = [(c,) if c != from_char else (from_char, to_char) for c in word]
+   return (''.join(o) for o in product(*options))
+
+
+def filler1(word):
+   combos = [(c,) if c not in dict_motif else dict_motif[c] for c in word]
+   return (''.join(o) for o in product(*combos))
+
+def motif_set_getter1(motif):
+
+    motif=motif.upper()
+    
+    motif_set=set(filler1(motif))    
+
+    return motif_set
+
+#print(len(motif_set_getter1(motif)))
+
+
 
 def motif_set_getter(motif):
 
@@ -63,6 +92,17 @@ def motif_set_getter(motif):
     return new_motif_set
 
 motif_set_getter(motif)
+
+#copy of code
+
+
+
+
+
+
+
+
+   
 
 
 # In[171]:
@@ -211,7 +251,7 @@ class Motif:
         else:
             self.name = self.ogname
         self.length=len(self.name)
-        self.sequences= motif_set_getter(self.name)
+        self.sequences= motif_set_getter1(self.name)
         self.color = color_list[Motif.motif_times_called]
         Motif.motif_times_called+=1
         
